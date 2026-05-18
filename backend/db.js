@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const mysql = require("mysql2");
 
 const db = mysql.createConnection({
@@ -15,4 +16,5 @@ db.connect((err) => {
   }
 });
 
+// eslint-disable-next-line no-undef
 module.exports = db;

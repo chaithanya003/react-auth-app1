@@ -8,10 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Server Running");
-});
-
 app.post("/register", (req, res) => {
   const { name, email, password } = req.body;
 
@@ -28,9 +24,6 @@ app.post("/register", (req, res) => {
   });
 });
 
-app.listen(5000, () => {
-  console.log("Server Running on Port 5000");
-});
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -39,14 +32,17 @@ app.post("/login", (req, res) => {
 
   db.query(sql, [email, password], (err, result) => {
     if (err) {
-      console.log(err);
       res.status(500).json("Login Failed");
     } else {
       if (result.length > 0) {
         res.json("Login Successful");
       } else {
-        res.status(401).json("Invalid Email or Password");
+        res.status(401).json("Invalid Credentials");
       }
     }
   });
+});
+
+app.listen(5000, () => {
+  console.log("Server Running on Port 5000");
 });
