@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -7,15 +8,26 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Dummy Login
-    if (email === "admin@gmail.com" && password === "1234") {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      alert(response.data);
+
       localStorage.setItem("token", "user-token");
 
       navigate("/dashboard");
-    } else {
+    } catch (error) {
+      console.log(error);
+
       alert("Invalid Credentials");
     }
   };
