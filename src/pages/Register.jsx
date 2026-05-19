@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Register() {
   const [name, setName] = useState("");
@@ -8,12 +9,32 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
-    alert("Registration Successful");
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
-    navigate("/login");
+      // 🔥 IMPORTANT FIX: show backend message properly
+      console.log(response.data);
+
+      alert(response.data.message || "Registered Successfully");
+
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+
+      alert(
+        error.response?.data?.message || "Registration Failed"
+      );
+    }
   };
 
   return (
@@ -25,6 +46,7 @@ function Register() {
           type="text"
           placeholder="Enter Name"
           style={styles.input}
+          value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
@@ -32,6 +54,7 @@ function Register() {
           type="email"
           placeholder="Enter Email"
           style={styles.input}
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
@@ -39,16 +62,17 @@ function Register() {
           type="password"
           placeholder="Enter Password"
           style={styles.input}
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button style={styles.button}>
+        <button style={styles.button} type="submit">
           Register
         </button>
 
         <p>
-          Already have an account?
-          <Link to="/login"> Login</Link>
+          Already have an account?{" "}
+          <Link to="/login">Login</Link>
         </p>
       </form>
     </div>
