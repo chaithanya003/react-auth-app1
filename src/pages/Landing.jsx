@@ -25,7 +25,7 @@ function Landing() {
         </h1>
 
         <p style={styles.text}>
-          Secure Login & Registration System using React JS and MongoDB
+          Secure Login & Registration System using React JS and Mysql
         </p>
 
         <div>
@@ -43,7 +43,7 @@ function Landing() {
         </div>
 
         <div style={styles.card}>
-          <h3>MongoDB Storage</h3>
+          <h3>mysql Storage</h3>
           <p>Stores all user data securely in database.</p>
         </div>
 
